@@ -1,0 +1,5 @@
+TODO: PostgreSQL database configuration
+TODO: Flyway database migration configuration
+
+spring.application.name=ticket-events-api
+
