@@ -1,4 +1,4 @@
-package dev.raniery.quickevent.core.entity;
+package dev.raniery.quickevent.core.enums;
 
 public enum Category {
     MUSIC,
