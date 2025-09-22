@@ -12,7 +12,7 @@ public record Event(
 
     String description,
 
-    String eventTicketId,
+    String ticketCode,
 
     LocalDateTime startDateTime,
 
