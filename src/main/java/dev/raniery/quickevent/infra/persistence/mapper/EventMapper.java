@@ -3,9 +3,9 @@ package dev.raniery.quickevent.infra.persistence.mapper;
 import dev.raniery.quickevent.core.entity.Event;
 import dev.raniery.quickevent.infra.dto.EventDto;
 import dev.raniery.quickevent.infra.service.TicketCodeGeneratorService;
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 
-@UtilityClass
+@Component
 public class EventMapper {
 
     public Event toDomain(EventDto eventDto) {
