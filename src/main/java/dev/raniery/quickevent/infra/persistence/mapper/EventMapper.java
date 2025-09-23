@@ -2,18 +2,18 @@ package dev.raniery.quickevent.infra.persistence.mapper;
 
 import dev.raniery.quickevent.core.entity.Event;
 import dev.raniery.quickevent.infra.dto.EventDto;
+import dev.raniery.quickevent.infra.service.TicketCodeGeneratorService;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class EventMapper {
 
-    //TODO: construtor para ID e ticketCode
     public Event toDomain(EventDto eventDto) {
         return new Event(
             null,
             eventDto.name(),
             eventDto.description(),
-            null,
+            TicketCodeGeneratorService.execute(),
             eventDto.startDateTime(),
             eventDto.endDateTime(),
             eventDto.location(),
