@@ -2,6 +2,7 @@ package dev.raniery.quickevent.infra.persistence.mapper;
 
 import dev.raniery.quickevent.core.entity.Event;
 import dev.raniery.quickevent.infra.dto.EventDto;
+import dev.raniery.quickevent.infra.dto.EventResponseDto;
 import dev.raniery.quickevent.infra.service.TicketCodeGeneratorService;
 import org.springframework.stereotype.Component;
 
@@ -34,5 +35,20 @@ public class EventMapper {
             .organizer(event.organizer())
             .category(event.category())
             .build();
+    }
+
+    public EventResponseDto toResponseDto(Event event) {
+        return new EventResponseDto(
+            event.id(),
+            event.name(),
+            event.description(),
+            event.ticketCode(),
+            event.startDateTime(),
+            event.endDateTime(),
+            event.location(),
+            event.capacity(),
+            event.organizer(),
+            event.category()
+        );
     }
 }

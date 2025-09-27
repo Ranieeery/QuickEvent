@@ -2,10 +2,7 @@ package dev.raniery.quickevent.infra.persistence.entity;
 
 import dev.raniery.quickevent.core.enums.Category;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_events")
 public class EventEntity {
@@ -45,17 +43,4 @@ public class EventEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
-
-    public EventEntity(Long id, String name, String description, String ticketCode, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, Integer capacity, String organizer, Category category) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.ticketCode = ticketCode;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.location = location;
-        this.capacity = capacity;
-        this.organizer = organizer;
-        this.category = category;
-    }
 }
