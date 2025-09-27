@@ -5,11 +5,14 @@ import dev.raniery.quickevent.core.entity.Event;
 
 public class CreateEventCaseImpl implements CreateEventCase {
 
+    private final EventAdapter eventAdapter;
+
     public CreateEventCaseImpl(EventAdapter eventAdapter) {
+        this.eventAdapter = eventAdapter;
     }
 
     @Override
     public Event execute(Event event) {
-        return null;
+        return eventAdapter.createEvent(event);
     }
 }
