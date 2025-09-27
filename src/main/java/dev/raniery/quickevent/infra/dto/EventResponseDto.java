@@ -1,9 +1,11 @@
 package dev.raniery.quickevent.infra.dto;
 
 import dev.raniery.quickevent.core.enums.Category;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record EventResponseDto(
     Long id,
 

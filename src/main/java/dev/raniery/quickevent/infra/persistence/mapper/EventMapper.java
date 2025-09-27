@@ -38,17 +38,17 @@ public class EventMapper {
     }
 
     public EventResponseDto toResponseDto(Event event) {
-        return new EventResponseDto(
-            event.id(),
-            event.name(),
-            event.description(),
-            event.ticketCode(),
-            event.startDateTime(),
-            event.endDateTime(),
-            event.location(),
-            event.capacity(),
-            event.organizer(),
-            event.category()
-        );
+        return EventResponseDto.builder()
+            .id(event.id())
+            .name(event.name())
+            .description(event.description())
+            .ticketCode(event.ticketCode())
+            .startDateTime(event.startDateTime())
+            .endDateTime(event.endDateTime())
+            .location(event.location())
+            .capacity(event.capacity())
+            .organizer(event.organizer())
+            .category(event.category())
+            .build();
     }
 }
