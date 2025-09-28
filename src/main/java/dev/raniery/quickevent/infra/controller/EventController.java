@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,14 +37,14 @@ public class EventController {
         this.getEventByTicketCodeUseCase = getEventByTicketCodeUseCase;
     }
 
-    //TODO: findById to ResponseEntity.created() using URI
     @PostMapping("/events")
     public ResponseEntity<EventResponseDto> createEvent(@Valid @RequestBody EventDto eventDto) {
         String ticketCode = ticketCodeGeneratorService.execute();
 
         Event newEvent = createEventUseCase.execute(eventMapper.toDomain(eventDto, ticketCode));
+        URI uri = URI.create("/api/v1/events/" + newEvent.id());
 
-        return ResponseEntity.status(201).body(eventMapper.toResponseDto(newEvent));
+        return ResponseEntity.created(uri).body(eventMapper.toResponseDto(newEvent));
     }
 
     @GetMapping("/events")
