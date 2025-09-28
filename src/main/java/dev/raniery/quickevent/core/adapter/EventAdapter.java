@@ -9,4 +9,10 @@ public interface EventAdapter {
     Event createEvent(Event event);
 
     List<Event> getAllEvents();
+
+    boolean existsByTicketCode(String ticketCode);
+
+    Event getEventById(Long id);
+
+    Event getEventByTicketCode(String ticketCode);
 }
