@@ -24,19 +24,6 @@ public class EventMapper {
         );
     }
 
-    public EventDto toDto(Event event) {
-        return EventDto.builder()
-            .name(event.name())
-            .description(event.description())
-            .startDateTime(event.startDateTime())
-            .endDateTime(event.endDateTime())
-            .location(event.location())
-            .capacity(event.capacity())
-            .organizer(event.organizer())
-            .category(event.category())
-            .build();
-    }
-
     public EventResponseDto toResponseDto(Event event) {
         return EventResponseDto.builder()
             .id(event.id())
