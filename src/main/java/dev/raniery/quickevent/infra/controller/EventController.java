@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//TODO: Add exception handling
 @RestController
 @RequestMapping("/api/v1")
 public class EventController {

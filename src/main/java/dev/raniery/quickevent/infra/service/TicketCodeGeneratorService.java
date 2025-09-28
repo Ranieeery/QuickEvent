@@ -1,5 +1,6 @@
 package dev.raniery.quickevent.infra.service;
 
+import dev.raniery.quickevent.infra.exceptions.TicketCodeMaxAttemptsException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class TicketCodeGeneratorService {
                 return ticketCode;
             }
         }
-        throw new RuntimeException("Failed to generate unique ticket code after " + MAX_ATTEMPTS + " attempts");
+        throw new TicketCodeMaxAttemptsException("Failed to generate unique ticket code after " + MAX_ATTEMPTS + " attempts");
     }
 
     private String generateCode() {
