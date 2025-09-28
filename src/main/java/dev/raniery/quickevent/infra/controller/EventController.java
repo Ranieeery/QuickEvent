@@ -1,10 +1,7 @@
 package dev.raniery.quickevent.infra.controller;
 
 import dev.raniery.quickevent.core.entity.Event;
-import dev.raniery.quickevent.core.useCases.CreateEventUseCase;
-import dev.raniery.quickevent.core.useCases.GetAllEventsUseCase;
-import dev.raniery.quickevent.core.useCases.GetEventByIdUseCase;
-import dev.raniery.quickevent.core.useCases.GetEventByTicketCodeUseCase;
+import dev.raniery.quickevent.core.useCases.*;
 import dev.raniery.quickevent.infra.dto.EventDto;
 import dev.raniery.quickevent.infra.dto.EventResponseDto;
 import dev.raniery.quickevent.infra.persistence.mapper.EventMapper;
@@ -27,14 +24,16 @@ public class EventController {
     private final GetAllEventsUseCase getAllEventsUseCase;
     private final GetEventByIdUseCase getEventByIdUseCase;
     private final GetEventByTicketCodeUseCase getEventByTicketCodeUseCase;
+    private final GetEventByNameUseCase getEventByNameUseCase;
 
-    public EventController(EventMapper eventMapper, TicketCodeGeneratorService ticketCodeGeneratorService, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase, GetEventByIdUseCase getEventByIdUseCase, GetEventByTicketCodeUseCase getEventByTicketCodeUseCase) {
+    public EventController(EventMapper eventMapper, TicketCodeGeneratorService ticketCodeGeneratorService, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase, GetEventByIdUseCase getEventByIdUseCase, GetEventByTicketCodeUseCase getEventByTicketCodeUseCase, GetEventByNameUseCase getEventByNameUseCase) {
         this.eventMapper = eventMapper;
         this.ticketCodeGeneratorService = ticketCodeGeneratorService;
         this.createEventUseCase = createEventUseCase;
         this.getAllEventsUseCase = getAllEventsUseCase;
         this.getEventByIdUseCase = getEventByIdUseCase;
         this.getEventByTicketCodeUseCase = getEventByTicketCodeUseCase;
+        this.getEventByNameUseCase = getEventByNameUseCase;
     }
 
     @PostMapping("/events")
@@ -49,7 +48,8 @@ public class EventController {
 
     @GetMapping("/events")
     public ResponseEntity<List<EventResponseDto>> getAllEvents() {
-        List<EventResponseDto> eventList = getAllEventsUseCase.execute().stream().map(eventMapper::toResponseDto).toList();
+        List<EventResponseDto> eventList = getAllEventsUseCase.execute().stream()
+            .map(eventMapper::toResponseDto).toList();
 
         return ResponseEntity.ok(eventList);
     }
@@ -66,5 +66,13 @@ public class EventController {
         Event event = getEventByTicketCodeUseCase.execute(ticketCode);
 
         return ResponseEntity.ok(eventMapper.toResponseDto(event));
+    }
+
+    @GetMapping("/events/name/{name}")
+    public ResponseEntity<List<EventResponseDto>> getEventByName(@PathVariable String name) {
+        List<EventResponseDto> eventList = getEventByNameUseCase.execute(name).stream()
+            .map(eventMapper::toResponseDto).toList();
+
+        return ResponseEntity.ok(eventList);
     }
 }

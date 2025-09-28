@@ -27,4 +27,9 @@ public class BeanConfiguration {
     public GetEventByTicketCodeUseCase getEventByTicketCodeUseCase(EventAdapter eventAdapter) {
         return new GetEventByTicketCodeUseCaseImpl(eventAdapter);
     }
+
+    @Bean
+    public GetEventByNameUseCase getEventByNameUseCase(EventAdapter eventAdapter) {
+        return new GetEventByNameUseCaseImpl(eventAdapter);
+    }
 }

@@ -60,4 +60,11 @@ public class EventRepositoryAdapter implements EventAdapter {
 
         throw new NotFoundByTicketCodeException("Event not found with ticket code: " + ticketCode);
     }
+
+    @Override
+    public List<Event> getEventByName(String name) {
+        List<EventEntity> eventList = eventRepository.findAllByNameContaining(name);
+
+        return eventList.stream().map(eventEntityMapper::toDomain).toList();
+    }
 }

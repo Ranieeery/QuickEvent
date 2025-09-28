@@ -15,4 +15,6 @@ public interface EventAdapter {
     Event getEventById(Long id);
 
     Event getEventByTicketCode(String ticketCode);
+
+    List<Event> getEventByName(String name);
 }
