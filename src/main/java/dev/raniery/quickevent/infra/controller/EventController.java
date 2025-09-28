@@ -6,6 +6,7 @@ import dev.raniery.quickevent.core.useCases.GetAllEventsUseCase;
 import dev.raniery.quickevent.infra.dto.EventDto;
 import dev.raniery.quickevent.infra.dto.EventResponseDto;
 import dev.raniery.quickevent.infra.persistence.mapper.EventMapper;
+import dev.raniery.quickevent.infra.service.TicketCodeGeneratorService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +19,24 @@ import java.util.List;
 public class EventController {
 
     private final EventMapper eventMapper;
+    private final TicketCodeGeneratorService ticketCodeGeneratorService;
 
     private final CreateEventUseCase createEventUseCase;
-
     private final GetAllEventsUseCase getAllEventsUseCase;
 
-    public EventController(EventMapper eventMapper, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase) {
+    public EventController(EventMapper eventMapper, TicketCodeGeneratorService ticketCodeGeneratorService, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase) {
         this.eventMapper = eventMapper;
+        this.ticketCodeGeneratorService = ticketCodeGeneratorService;
         this.createEventUseCase = createEventUseCase;
         this.getAllEventsUseCase = getAllEventsUseCase;
     }
 
+    //TODO: findById to ResponseEntity.created() using URI
     @PostMapping("/events")
     public ResponseEntity<EventResponseDto> createEvent(@Valid @RequestBody EventDto eventDto) {
-        Event newEvent = createEventUseCase.execute(eventMapper.toDomain(eventDto));
+        String ticketCode = ticketCodeGeneratorService.execute();
+
+        Event newEvent = createEventUseCase.execute(eventMapper.toDomain(eventDto, ticketCode));
 
         return ResponseEntity.status(201).body(eventMapper.toResponseDto(newEvent));
     }

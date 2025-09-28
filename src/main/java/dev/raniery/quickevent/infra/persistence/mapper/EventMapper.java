@@ -3,18 +3,17 @@ package dev.raniery.quickevent.infra.persistence.mapper;
 import dev.raniery.quickevent.core.entity.Event;
 import dev.raniery.quickevent.infra.dto.EventDto;
 import dev.raniery.quickevent.infra.dto.EventResponseDto;
-import dev.raniery.quickevent.infra.service.TicketCodeGeneratorService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventMapper {
 
-    public Event toDomain(EventDto eventDto) {
+    public Event toDomain(EventDto eventDto, String ticketCode) {
         return new Event(
             null,
             eventDto.name(),
             eventDto.description(),
-            TicketCodeGeneratorService.execute(),
+            ticketCode,
             eventDto.startDateTime(),
             eventDto.endDateTime(),
             eventDto.location(),
