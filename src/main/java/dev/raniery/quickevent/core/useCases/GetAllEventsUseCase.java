@@ -4,7 +4,7 @@ import dev.raniery.quickevent.core.entity.Event;
 
 import java.util.List;
 
-public interface GetAllEventsCase {
+public interface GetAllEventsUseCase {
 
     List<Event> execute();
 }
