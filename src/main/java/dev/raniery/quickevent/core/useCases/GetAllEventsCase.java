@@ -2,7 +2,9 @@ package dev.raniery.quickevent.core.useCases;
 
 import dev.raniery.quickevent.core.entity.Event;
 
-public interface SearchEventCase {
+import java.util.List;
 
-    Event execute(String name);
+public interface GetAllEventsCase {
+
+    List<Event> execute();
 }

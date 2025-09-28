@@ -7,6 +7,8 @@ import dev.raniery.quickevent.infra.persistence.mapper.EventEntityMapper;
 import dev.raniery.quickevent.infra.persistence.repository.EventRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class EventRepositoryAdapter implements EventAdapter {
 
@@ -18,10 +20,16 @@ public class EventRepositoryAdapter implements EventAdapter {
         this.eventEntityMapper = eventEntityMapper;
     }
 
-
     @Override
     public Event createEvent(Event event) {
         EventEntity eventEntity = eventRepository.save(eventEntityMapper.toEntity(event));
         return eventEntityMapper.toDomain(eventEntity);
+    }
+
+    @Override
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll().stream()
+            .map(eventEntityMapper::toDomain)
+            .toList();
     }
 }

@@ -3,16 +3,18 @@ package dev.raniery.quickevent.core.useCases;
 import dev.raniery.quickevent.core.adapter.EventAdapter;
 import dev.raniery.quickevent.core.entity.Event;
 
-public class SearchEventCaseImpl implements SearchEventCase {
+import java.util.List;
+
+public class GetAllEventsCaseImpl implements GetAllEventsCase {
 
     private final EventAdapter eventAdapter;
 
-    public SearchEventCaseImpl(EventAdapter eventAdapter) {
+    public GetAllEventsCaseImpl(EventAdapter eventAdapter) {
         this.eventAdapter = eventAdapter;
     }
 
     @Override
-    public Event execute(String name) {
-        return null;
+    public List<Event> execute() {
+        return eventAdapter.getAllEvents();
     }
 }
