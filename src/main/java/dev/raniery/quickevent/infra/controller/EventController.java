@@ -3,6 +3,8 @@ package dev.raniery.quickevent.infra.controller;
 import dev.raniery.quickevent.core.entity.Event;
 import dev.raniery.quickevent.core.useCases.CreateEventUseCase;
 import dev.raniery.quickevent.core.useCases.GetAllEventsUseCase;
+import dev.raniery.quickevent.core.useCases.GetEventByIdUseCase;
+import dev.raniery.quickevent.core.useCases.GetEventByTicketCodeUseCase;
 import dev.raniery.quickevent.infra.dto.EventDto;
 import dev.raniery.quickevent.infra.dto.EventResponseDto;
 import dev.raniery.quickevent.infra.persistence.mapper.EventMapper;
@@ -22,12 +24,16 @@ public class EventController {
 
     private final CreateEventUseCase createEventUseCase;
     private final GetAllEventsUseCase getAllEventsUseCase;
+    private final GetEventByIdUseCase getEventByIdUseCase;
+    private final GetEventByTicketCodeUseCase getEventByTicketCodeUseCase;
 
-    public EventController(EventMapper eventMapper, TicketCodeGeneratorService ticketCodeGeneratorService, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase) {
+    public EventController(EventMapper eventMapper, TicketCodeGeneratorService ticketCodeGeneratorService, CreateEventUseCase createEventUseCase, GetAllEventsUseCase getAllEventsUseCase, GetEventByIdUseCase getEventByIdUseCase, GetEventByTicketCodeUseCase getEventByTicketCodeUseCase) {
         this.eventMapper = eventMapper;
         this.ticketCodeGeneratorService = ticketCodeGeneratorService;
         this.createEventUseCase = createEventUseCase;
         this.getAllEventsUseCase = getAllEventsUseCase;
+        this.getEventByIdUseCase = getEventByIdUseCase;
+        this.getEventByTicketCodeUseCase = getEventByTicketCodeUseCase;
     }
 
     //TODO: findById to ResponseEntity.created() using URI
@@ -45,5 +51,19 @@ public class EventController {
         List<EventResponseDto> eventList = getAllEventsUseCase.execute().stream().map(eventMapper::toResponseDto).toList();
 
         return ResponseEntity.ok(eventList);
+    }
+
+    @GetMapping("/events/{id}")
+    public ResponseEntity<EventResponseDto> getEventById(@PathVariable Long id) {
+        Event event = getEventByIdUseCase.execute(id);
+
+        return ResponseEntity.ok(eventMapper.toResponseDto(event));
+    }
+
+    @GetMapping("/events/ticket/{ticketCode}")
+    public ResponseEntity<EventResponseDto> getEventByTicketCode(@PathVariable String ticketCode) {
+        Event event = getEventByTicketCodeUseCase.execute(ticketCode);
+
+        return ResponseEntity.ok(eventMapper.toResponseDto(event));
     }
 }

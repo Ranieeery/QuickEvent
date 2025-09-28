@@ -1,10 +1,7 @@
 package dev.raniery.quickevent.infra.config;
 
 import dev.raniery.quickevent.core.adapter.EventAdapter;
-import dev.raniery.quickevent.core.useCases.CreateEventUseCase;
-import dev.raniery.quickevent.core.useCases.CreateEventUseCaseImpl;
-import dev.raniery.quickevent.core.useCases.GetAllEventsUseCase;
-import dev.raniery.quickevent.core.useCases.GetAllEventsUseCaseImpl;
+import dev.raniery.quickevent.core.useCases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,5 +16,15 @@ public class BeanConfiguration {
     @Bean
     public GetAllEventsUseCase getAllEventsUseCase(EventAdapter eventAdapter) {
         return new GetAllEventsUseCaseImpl(eventAdapter);
+    }
+
+    @Bean
+    public GetEventByIdUseCase getEventByIdUseCase(EventAdapter eventAdapter) {
+        return new GetEventByIdUseCaseImpl(eventAdapter);
+    }
+
+    @Bean
+    public GetEventByTicketCodeUseCase getEventByTicketCodeUseCase(EventAdapter eventAdapter) {
+        return new GetEventByTicketCodeUseCaseImpl(eventAdapter);
     }
 }

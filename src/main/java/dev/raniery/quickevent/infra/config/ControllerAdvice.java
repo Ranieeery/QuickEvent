@@ -1,5 +1,7 @@
 package dev.raniery.quickevent.infra.config;
 
+import dev.raniery.quickevent.infra.exceptions.NotFoundByIdException;
+import dev.raniery.quickevent.infra.exceptions.NotFoundByTicketCodeException;
 import dev.raniery.quickevent.infra.exceptions.TicketCodeMaxAttemptsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +41,17 @@ public class ControllerAdvice {
         response.put("errors", errors);
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler({NotFoundByIdException.class, NotFoundByTicketCodeException.class})
+    public ResponseEntity<Map<String, Object>> handleNotFoundException(Exception e) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("timestamp", LocalDateTime.now());
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        response.put("error", "Not Found");
+        response.put("message", e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
